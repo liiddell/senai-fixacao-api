@@ -5,67 +5,63 @@ import { toast } from "react-toastify";
 import api from "../../service/api";
 import "./style.css";
 
-const esquemaDeCadastro = yup.object({
+const schema = yup.object({
   nome: yup
     .string()
     .required("O nome é obrigatório.")
     .min(3, "O nome deve ter pelo menos 3 caracteres."),
   preco: yup
-    .string()
+    .number()
+    .typeError("O preço deve ser um número.")
     .required("O preço é obrigatório."),
   quantidade: yup
-    .string()
-    .required("A quantidade é obrigatória.")  
-     .min(1, "A quantidade deve ter pelo menos 1 caractere."),
- 
+    .number()
+    .typeError("A quantidade deve ser um número.")
+    .min(1, "A quantidade mínima é 1.")
+    .required("A quantidade é obrigatória."),
 });
 
 function PaginaDeCadastro() {
   const {
-    register: registrarCampo,
-    handleSubmit: lidarComEnvioDoFormulario,
-    formState: { errors: errosDoFormulario, isSubmitting: estaEnviando },
-    setError: definirErroNoCampo,
-    reset: limparCamposDoFormulario,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    reset,
   } = useForm({
-    resolver: yupResolver(esquemaDeCadastro),
+    resolver: yupResolver(schema),
     defaultValues: { nome: "", preco: "", quantidade: "" },
   });
 
-  async function enviarDados(dadosDoFormulario) {
-    const dadosParaApi = {
-      nome: dadosDoFormulario.nome,
-      preco: dadosDoFormulario.preco,
-      quantidade: dadosDoFormulario.quantidade,
-    };
-
+  const enviarDados = async (formData) => {
     try {
-      const resposta = await api.post("/produtos", dadosParaApi);
-      toast.success(resposta.data.mensagem || "Produto cadastrado com sucesso!");
-      limparCamposDoFormulario();
+      const resposta = await api.post("/produtos", formData);
+
+      toast.success(resposta?.data?.mensagem || "Produto cadastrado com sucesso!");
+      reset();
 
     } catch (erro) {
-      const codigoDeStatus = erro?.response?.status;
-      const mensagemDoServidor =
-        erro?.response?.data?.mensagem || "Erro ao cadastrar produto.";
+      const status = erro?.response?.status;
+      const mensagem = erro?.response?.data?.mensagem || "Erro ao cadastrar produto.";
 
-      if (codigoDeStatus === 409) {
-        definirErroNoCampo("preco", {
+      if (status === 409) {
+        setError("preco", {
           type: "server",
-          message: mensagemDoServidor, 
+          message: mensagem,
         });
       }
 
-      toast.error(mensagemDoServidor);
+      toast.error(mensagem);
       console.error("Erro no cadastro:", erro);
     }
-  }
+  };
 
   return (
     <div className="cadastro-container">
-      <h1>Cadastro de Usuário</h1>
+      <h1>Cadastro de Produto</h1>
 
-      <form noValidate onSubmit={lidarComEnvioDoFormulario(enviarDados)}>
+      <form noValidate onSubmit={handleSubmit(enviarDados)}>
+        
         {/* Nome */}
         <div className="form-group">
           <label htmlFor="campo-nome">Nome</label>
@@ -73,42 +69,40 @@ function PaginaDeCadastro() {
             id="campo-nome"
             type="text"
             placeholder="Ex.: Bom Bril"
-            {...registrarCampo("nome")}
+            {...register("nome")}
           />
+          {errors.nome && <p className="error-message">{errors.nome.message}</p>}
         </div>
-        {errosDoFormulario.nome && (
-          <p className="error-message">{errosDoFormulario.nome.message}</p>
-        )}
 
         {/* Preço */}
         <div className="form-group">
           <label htmlFor="campo-preco">Preço</label>
           <input
             id="campo-preco"
-            type="text"
+            type="number"
+            step="0.01"
             placeholder="Ex.: 19.99"
-            {...registrarCampo("preco")}
+            {...register("preco")}
           />
+          {errors.preco && <p className="error-message">{errors.preco.message}</p>}
         </div>
-        {errosDoFormulario.preco && (
-          <p className="error-message">{errosDoFormulario.preco.message}</p>
-        )}
 
         {/* Quantidade */}
         <div className="form-group">
           <label htmlFor="campo-quantidade">Quantidade</label>
           <input
             id="campo-quantidade"
-            type="text"
+            type="number"
             placeholder="Ex.: 10"
-            {...registrarCampo("quantidade")}
+            {...register("quantidade")}
           />
+          {errors.quantidade && (
+            <p className="error-message">{errors.quantidade.message}</p>
+          )}
         </div>
-        {errosDoFormulario.quantidade && (
-          <p className="error-message">{errosDoFormulario.quantidade.message}</p>
-        )}
-        <button type="submit" disabled={estaEnviando}>
-          {estaEnviando ? "Cadastrando..." : "Cadastrar"}
+
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Cadastrando..." : "Cadastrar"}
         </button>
       </form>
     </div>

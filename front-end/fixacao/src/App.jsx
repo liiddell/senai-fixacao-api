@@ -13,9 +13,9 @@ import HomePages from '../src/pages/HomePages';
 
 function App() {
   return (
-    <>
+    <div className='app'>
       <Header />
-      <main>
+      <main className='content'>
         <Routes>
           <Route path="/" element={<HomePages />} /> 
           <Route path="/cadastro" element={<CadastraProdutoPages />} />
@@ -24,7 +24,7 @@ function App() {
       </main>
       <Footer />
       <ToastContainer position="top-right" autoClose={5000} />
-    </>
+    </div>
   );
 }
 
