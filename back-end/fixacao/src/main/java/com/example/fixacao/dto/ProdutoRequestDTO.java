@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class ProdutoRequestDTO {
     @NotBlank (message = "O nome é obrigatório")
     @Size(min = 3, message = "O nome deve ter pelo menos 3 caracteres")
@@ -20,5 +17,38 @@ public class ProdutoRequestDTO {
 
     @NotBlank (message = "A quantidade é obrigatória")
     private int quantidade;
+
+    public ProdutoRequestDTO() {
+    }
+
+    public ProdutoRequestDTO(String nome, Double preco, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 }
 
