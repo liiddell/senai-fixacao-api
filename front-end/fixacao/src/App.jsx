@@ -1,6 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react'
+import './App.css'
+import { Route, Routes } from 'react-router-dom'
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+// import 'react-toastify/dist/ReactToastify.css'; 
 
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
@@ -10,9 +13,9 @@ import HomePages from '../src/pages/HomePages';
 
 function App() {
   return (
-    <Router>
+    <>
       <Header />
-      <main style={{ flex: 1 }}>
+      <main>
         <Routes>
           <Route path="/" element={<HomePages />} /> 
           <Route path="/cadastro" element={<CadastraProdutoPages />} />
@@ -21,7 +24,7 @@ function App() {
       </main>
       <Footer />
       <ToastContainer position="top-right" autoClose={5000} />
-    </Router>
+    </>
   );
 }
 
