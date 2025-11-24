@@ -1,0 +1,24 @@
+package com.example.fixacao.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class ProdutoRequestDTO {
+    @NotBlank (message = "O nome é obrigatório")
+    @Size(min = 3, message = "O nome deve ter pelo menos 3 caracteres")
+    @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
+    private String nome;
+
+    @NotBlank (message = "O preco é obrigatório")
+    private Double preco;
+
+    @NotBlank (message = "A quantidade é obrigatória")
+    private int quantidade;
+}
+
