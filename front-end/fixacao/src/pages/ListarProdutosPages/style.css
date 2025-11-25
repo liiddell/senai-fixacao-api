@@ -7,3 +7,76 @@
   --grey: #2E3A59;
   --white: #FFFFFF;
 }
+
+.listaContainer {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* --- Título --- */
+.listaContainer h1 {
+    text-align: center;
+    color: var(--grey);
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--brand); /* Linha de destaque */
+    padding-bottom: 10px;
+}
+
+/* --- Mensagem de Carregamento/Vazio --- */
+.listaContainer h2,
+.listaContainer p {
+    text-align: center;
+    color: var(--grey);
+    padding: 20px;
+}
+
+/* --- Estilo da Tabela --- */
+.tabelaprodutos {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaçamento entre bordas */
+    margin-top: 20px;
+    border-radius: 8px; /* Bordas arredondadas na tabela */
+    overflow: hidden; /* Garante que as bordas arredondadas sejam visíveis */
+}
+
+/* Cabeçalho da Tabela (Thead) */
+.tabelaprodutos thead tr {
+    background-color: var(--brand); /* Fundo verde de marca */
+    color: var(--white);
+    text-align: left;
+}
+
+.tabelaprodutos th {
+    padding: 15px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Corpo da Tabela (Tbody) */
+.tabelaprodutos td {
+    padding: 12px 20px;
+    color: var(--grey);
+    border-bottom: 1px solid #e0e0e0; /* Linha divisória clara */
+}
+
+/* Efeito Hover nas linhas */
+.tabelaprodutos tbody tr:hover {
+    background-color: rgba(93, 179, 41, 0.1); /* Um leve verde claro no hover */
+    transition: background-color 0.3s ease;
+}
+
+/* Cor das linhas alternadas (zebra stripes) para melhor legibilidade */
+.tabelaprodutos tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Última linha da tabela */
+.tabelaprodutos tbody tr:last-child td {
+    border-bottom: none;
+}
