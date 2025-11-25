@@ -26,7 +26,7 @@ function App() {
           <Route path="/deletar" element={<DeletarProdutoPages />} />
         </Routes>
       </main>
-      <Footer />
+      {/* <Footer /> */}
       <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );

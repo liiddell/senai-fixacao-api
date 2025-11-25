@@ -1,111 +1,137 @@
-/* body {
-  background: var(--cor-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-} */
-
-/* =============================
-   CONTAINER
-   ============================= */
 :root {
- --brand: #5DB329;
+  --brand: #5DB329;
+  --brand-dark: #4aa021;
   --info: #0095FF;
   --success: #00D68F;
   --warning: #f88012;
   --error: #FF3D71;
   --grey: #2E3A59;
+  --light-grey: #c9c9c9;
   --white: #FFFFFF;
+  --font-family: 'Arial', sans-serif;
+  --transition: 0.3s ease;
 }
-   
-/* --- Container Principal --- */
+
+body {
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  margin: 0;
+}
+
 .cadastro-container {
-    /* Centraliza o formulário com um tamanho fixo */
-    width: 700px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+  width: 700px;
+  padding: 40px 35px;
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: fadeInUp 0.6s forwards;
 }
 
-/* --- Título (Formato da listagem: Alinhado à esquerda com destaque da marca) --- */
+/* --- Título com animação --- */
 .cadastro-container h1 {
-    text-align: left; 
-    color: var(--grey);
-    margin-bottom: 30px;
-    padding-bottom: 10px;
-    border-bottom: 3px solid var(--brand); /* Destaque verde */
-    font-size: 2em;
+  text-align: left; 
+  color: var(--grey);
+  margin-bottom: 35px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--brand);
+  font-size: 2em;
+  letter-spacing: 0.5px;
 }
 
-/* --- Formato de Grupo --- */
+/* --- Grupos de campos --- */
 .form-group {
-    margin-bottom: 25px; /* Mais espaço entre os campos */
+  margin-bottom: 25px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
 }
 
-/* --- Label (Etiqueta do Campo) --- */
+.form-group:nth-child(1) { animation-delay: 0.2s; }
+.form-group:nth-child(2) { animation-delay: 0.3s; }
+.form-group:nth-child(3) { animation-delay: 0.4s; }
+.form-group:nth-child(4) { animation-delay: 0.5s; }
+
+/* --- Labels --- */
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--grey);
-    font-size: 0.95em;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--grey);
+  font-size: 0.95em;
+  transition: color var(--transition);
 }
 
-/* --- Campos de Input (Texto e Número) --- */
+/* --- Inputs --- */
 .form-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #c9c9c9; /* Borda mais sutil */
-    border-radius: 6px;
-    font-size: 1em;
-    color: var(--grey);
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--light-grey);
+  border-radius: 8px;
+  font-size: 1em;
+  color: var(--grey);
+  box-sizing: border-box;
+  transition: border-color var(--transition), box-shadow var(--transition), transform 0.2s ease;
 }
 
 .form-group input:focus {
-    border-color: var(--brand);
-    outline: none;
-    /* Sombra suave da cor da marca, seguindo o estilo moderno */
-    box-shadow: 0 0 0 3px rgba(93, 179, 41, 0.2); 
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(93, 179, 41, 0.15);
+  transform: scale(1.02);
 }
 
-/* --- Mensagens de Erro --- */
+/* --- Mensagem de erro --- */
 .error-message {
-    color: var(--error); /* Cor de erro (vermelho/rosa) */
-    margin-top: 5px;
-    font-size: 0.85em;
-    font-weight: 500;
+  color: var(--error);
+  margin-top: 5px;
+  font-size: 0.85em;
+  font-weight: 500;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
 }
 
-/* --- Botão de Submissão --- */
+/* --- Botão de envio --- */
 .cadastro-container button[type="submit"] {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--brand); /* Cor principal da marca */
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-top: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 16px;
+  background-color: var(--brand);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color var(--transition), box-shadow var(--transition), transform 0.2s ease;
+  margin-top: 25px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .cadastro-container button[type="submit"]:hover:not(:disabled) {
-    background-color: #4aa021; /* Versão mais escura da marca no hover */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  background-color: var(--brand-dark);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
-/* Estilo para o botão desabilitado (enquanto envia dados) */
 .cadastro-container button[type="submit"]:disabled {
-    background-color: #a0a0a0;
-    cursor: not-allowed;
-    box-shadow: none;
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* --- Animações --- */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

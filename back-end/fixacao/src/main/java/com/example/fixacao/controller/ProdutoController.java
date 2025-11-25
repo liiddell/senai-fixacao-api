@@ -51,14 +51,15 @@ public class ProdutoController {
     }
 
 
-    @DeleteMapping("/cadastro/{codigo}")
-    public ResponseEntity<Map<String, Object>> deletar(@PathVariable String codigo) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deletar(@PathVariable Long id) {
+        produtoService.deletar(id);
 
-        produtoService.deletar(codigo);
-
-        return ResponseEntity.ok().body(Map.of(
-                "mensagem", "Produto deletado com sucesso",
-                "sucesso", true
-        ));
+        return ResponseEntity
+                .ok()
+                .body(Map.of(
+                        "menssagem", "Produto deletado com sucesso",
+                        "sucesso", "true"
+                ));
     }
 }
