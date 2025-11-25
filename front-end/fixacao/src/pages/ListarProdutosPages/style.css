@@ -8,23 +8,36 @@
   --white: #FFFFFF;
 }
 
+/* Definição das variáveis de cor */
+:root {
+ --brand: #5DB329;
+ --info: #0095FF;
+ --success: #00D68F;
+ --warning: #FFA400;
+ --error: #FF3D71;
+ --grey: #2E3A59;
+ --white: #FFFFFF;
+}
+
+/* --- Estilo do Container Principal --- */
 .listaContainer {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 20px;
+    /* 🚨 MUDANÇA: Usando width: 100% com padding para margem interna */
+    width: 100%; 
+    padding: 30px 40px; /* Padding para garantir margem nas laterais */
     background-color: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-height: 80vh; /* Opcional: Garante que o container ocupe a maior parte da tela */
+    box-sizing: border-box; /* Inclui padding na largura */
     font-family: Arial, sans-serif;
 }
 
 /* --- Título --- */
 .listaContainer h1 {
-    text-align: center;
+    text-align: left; /* Alinhando à esquerda para um layout mais dinâmico */
     color: var(--grey);
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--brand); /* Linha de destaque */
+    margin-bottom: 25px;
+    border-bottom: 3px solid var(--brand); 
     padding-bottom: 10px;
+    font-size: 2em;
 }
 
 /* --- Mensagem de Carregamento/Vazio --- */
@@ -38,45 +51,56 @@
 /* --- Estilo da Tabela --- */
 .tabelaprodutos {
     width: 100%;
-    border-collapse: collapse; /* Remove espaçamento entre bordas */
+    border-collapse: collapse; 
     margin-top: 20px;
-    border-radius: 8px; /* Bordas arredondadas na tabela */
-    overflow: hidden; /* Garante que as bordas arredondadas sejam visíveis */
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Sombra mais suave na tabela */
 }
 
 /* Cabeçalho da Tabela (Thead) */
 .tabelaprodutos thead tr {
-    background-color: var(--brand); /* Fundo verde de marca */
+    background-color: var(--grey); /* Fundo cinza escuro para contraste */
     color: var(--white);
-    text-align: left;
 }
 
 .tabelaprodutos th {
-    padding: 15px 20px;
+    padding: 18px 25px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.9em;
+    text-align: left;
+}
+
+/* Colunas (ajuste o alinhamento para números) */
+.tabelaprodutos th:nth-child(2), /* Preço */
+.tabelaprodutos th:nth-child(3) { /* Quantidade */
+    text-align: center;
+    width: 15%; /* Define uma largura menor para colunas de números */
 }
 
 /* Corpo da Tabela (Tbody) */
 .tabelaprodutos td {
-    padding: 12px 20px;
+    padding: 15px 25px;
     color: var(--grey);
-    border-bottom: 1px solid #e0e0e0; /* Linha divisória clara */
+    border-bottom: 1px solid #e9ecef; /* Linha divisória muito clara */
+    font-size: 1em;
+}
+
+/* Alinhamento dos Dados (para combinar com o cabeçalho) */
+.tabelaprodutos td:nth-child(2), /* Preço */
+.tabelaprodutos td:nth-child(3) { /* Quantidade */
+    text-align: center;
+    font-weight: bold; /* Destaca valores numéricos */
 }
 
 /* Efeito Hover nas linhas */
 .tabelaprodutos tbody tr:hover {
-    background-color: rgba(93, 179, 41, 0.1); /* Um leve verde claro no hover */
+    background-color: #f0f0f0; /* Cinza bem claro no hover */
     transition: background-color 0.3s ease;
 }
 
-/* Cor das linhas alternadas (zebra stripes) para melhor legibilidade */
+/* Cor das linhas alternadas (zebra stripes) */
 .tabelaprodutos tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-/* Última linha da tabela */
-.tabelaprodutos tbody tr:last-child td {
-    border-bottom: none;
+    background-color: rgba(93, 179, 41, 0.05); /* Tonalidade sutil da marca */
 }
