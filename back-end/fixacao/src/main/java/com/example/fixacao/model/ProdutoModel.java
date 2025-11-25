@@ -19,6 +19,9 @@ public class ProdutoModel{
     private Long id;
 
     @Column(nullable = false)
+    private String codigo;
+
+    @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false)
@@ -30,8 +33,9 @@ public class ProdutoModel{
     public ProdutoModel() {
     }
 
-    public ProdutoModel(Long id, String nome, Double preco, int quantidade) {
+    public ProdutoModel(Long id, String codigo, String nome, Double preco, int quantidade) {
         this.id = id;
+        this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
@@ -43,6 +47,14 @@ public class ProdutoModel{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {

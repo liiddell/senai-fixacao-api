@@ -18,7 +18,7 @@ public class ProdutoServices {
     public List<ProdutoResponseDTO> listar() {
         return produtoRepository.findAll()
                 .stream()
-                .map(p -> new ProdutoResponseDTO(p.getNome(), p.getPreco(), p.getQuantidade()))
+                .map(p -> new ProdutoResponseDTO(p.getCodigo(), p.getNome(), p.getPreco(), p.getQuantidade()))
                 .toList();
     }
 
@@ -28,6 +28,7 @@ public class ProdutoServices {
         }
 
         ProdutoModel produto = new ProdutoModel();
+        produto.setCodigo(dto.getCodigo());
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setQuantidade(dto.getQuantidade());
@@ -36,27 +37,26 @@ public class ProdutoServices {
         return produto;
     }
 
-    public ProdutoModel atualizar (Long id, @Valid ProdutoRequestDTO dto) {
-        if (!produtoRepository.existsById(id)){
-            throw new RuntimeException("Produto não encontrado");
-        }
+    public ProdutoModel atualizar(String codigo, @Valid ProdutoRequestDTO dto) {
 
-        ProdutoModel produto = new ProdutoModel();
+        ProdutoModel produto = produtoRepository.findByCodigo(dto.getCodigo())
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        produto.setId(id);
-
+        // Atualiza somente os campos necessários
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setQuantidade(dto.getQuantidade());
 
-        produtoRepository.save(produto);
-        return produto;
+        return produtoRepository.save(produto);
     }
 
-    public void deletar (Long id){
-        if (!produtoRepository.existsById(id)){
-            throw new RuntimeException("Produto não encontrado");
-        }
-        produtoRepository.deleteById(id);
+
+    public void deletar(String codigo) {
+
+        ProdutoModel produto = produtoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        produtoRepository.delete(produto);
     }
+
 }

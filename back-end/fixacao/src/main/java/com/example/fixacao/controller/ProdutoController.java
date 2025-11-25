@@ -37,28 +37,28 @@ public class ProdutoController {
                 ));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> atualizar(@PathVariable Long id, @Valid @RequestBody ProdutoRequestDTO produtoRequestDTO) {
-        produtoService.atualizar(id, produtoRequestDTO);
+    @PutMapping("/{codigo}")
+    public ResponseEntity<Map<String, Object>> atualizar(
+            @PathVariable String codigo,
+            @Valid @RequestBody ProdutoRequestDTO produtoRequestDTO) {
 
-        return ResponseEntity
-                .ok()
-                .body(Map.of(
-                        "menssagem", "Produto atualizado com sucesso",
-                        "sucesso", "true"
-                ));
+        produtoService.atualizar(codigo, produtoRequestDTO);
+
+        return ResponseEntity.ok().body(Map.of(
+                "mensagem", "Produto atualizado com sucesso",
+                "sucesso", true
+        ));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> deletar(@PathVariable Long id) {
-        produtoService.deletar(id);
 
-        return ResponseEntity
-                .ok()
-                .body(Map.of(
-                        "menssagem", "Funcionário deletado com sucesso",
-                        "sucesso", "true"
-                ));
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Map<String, Object>> deletar(@PathVariable String codigo) {
+
+        produtoService.deletar(codigo);
+
+        return ResponseEntity.ok().body(Map.of(
+                "mensagem", "Produto deletado com sucesso",
+                "sucesso", true
+        ));
     }
-
 }
