@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class ProdutoResponseDTO {
+    private Long id;
     private String codigo;
     private String nome;
     private Double preco;
@@ -13,11 +14,16 @@ public class ProdutoResponseDTO {
     public ProdutoResponseDTO() {
     }
 
-    public ProdutoResponseDTO(String codigo, String nome, Double preco, int quantidade) {
+    public ProdutoResponseDTO(Long id, String codigo, String nome, Double preco, int quantidade) {
+        this.id = id;
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getCodigo() {

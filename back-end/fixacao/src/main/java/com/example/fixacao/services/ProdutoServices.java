@@ -18,7 +18,7 @@ public class ProdutoServices {
     public List<ProdutoResponseDTO> listar() {
         return produtoRepository.findAll()
                 .stream()
-                .map(p -> new ProdutoResponseDTO(p.getCodigo(), p.getNome(), p.getPreco(), p.getQuantidade()))
+                .map(p -> new ProdutoResponseDTO(p.getId(), p.getCodigo(), p.getNome(), p.getPreco(), p.getQuantidade()))
                 .toList();
     }
 

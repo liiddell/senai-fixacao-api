@@ -43,7 +43,7 @@ function PaginaDeDelecao() {
     if (!produtoParaDeletar) return;
 
     try {
-      const resposta = await api.delete(`/${produtoParaDeletar.id}`);
+      const resposta = await api.delete(`/cadastro/${produtoParaDeletar.id}`);
 
       toast.success(resposta?.data?.mensagem || "Produto deletado com sucesso!");
       reset();

@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import api from "../../service/api";
-import "./style.css";
+import '../CadastraProdutoPages/style.css'
 
 const schema = yup.object({
   codigo: yup

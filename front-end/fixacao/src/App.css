@@ -1,8 +1,6 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 1800px;
 }
 
 :root {
@@ -25,13 +23,14 @@
 .app {
   display: flex;
   min-height: 100vh;
+  width: 100%;
   font-family: Inter, sans-serif;
 }
 
 .content {
   flex: 1;
-  margin-left: 260px; 
-  padding: 16px;
+  margin-left: 230px; 
+  padding: 24px;
   background-color: #F5F5F5;
   border-radius: 20px;
 }

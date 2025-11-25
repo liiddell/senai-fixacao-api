@@ -30,20 +30,26 @@ function ListarProdutosPages() {
   return (
     <div className="listaContainer"> 
       <h1>Lista de Produtos</h1>
+
       {produtos.length === 0 ? (
         <p>Nenhum produto cadastrado.</p>
       ) : (
         <table className="tabelaprodutos"> 
           <thead>
             <tr>
+              <th>ID</th>
+              <th>Código</th>
               <th>Nome</th>
               <th>Preço</th>
               <th>Quantidade</th>
             </tr>
           </thead>
+
           <tbody>
             {produtos.map(produto => (
               <tr key={produto.id}> 
+                <td>{produto.id}</td>
+                <td>{produto.codigo}</td>
                 <td>{produto.nome}</td>
                 <td>{produto.preco}</td>
                 <td>{produto.quantidade}</td>

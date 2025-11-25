@@ -1,5 +1,5 @@
 :root {
- --brand: #5DB329;
+ --brand: #348b54;
   --info: #0095FF;
   --success: #00D68F;
   --warning: #f88012;
@@ -64,7 +64,7 @@
 
 
 .menu-item:hover {
-  background-color: var(--brand); 
+  background-color: #28a745; 
   color: var(--white);
 }
 

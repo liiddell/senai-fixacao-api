@@ -1,5 +1,5 @@
 :root {
-  --brand: #5DB329;
+  --brand: #348b54;
   --brand-dark: #4aa021;
   --info: #0095FF;
   --success: #00D68F;
@@ -12,18 +12,7 @@
   --transition: 0.3s ease;
 }
 
-body {
-  background: #f5f7fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-family: var(--font-family);
-  margin: 0;
-}
-
 .cadastro-container {
-  width: 700px;
   padding: 40px 35px;
   background-color: var(--white);
   border-radius: 12px;
