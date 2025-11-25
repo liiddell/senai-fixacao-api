@@ -35,7 +35,7 @@ function PaginaDeCadastro() {
 
   const enviarDados = async (formData) => {
     try {
-      const resposta = await api.post("/produtos", formData);
+      const resposta = await api.post("/cadastro", formData);
 
       toast.success(resposta?.data?.mensagem || "Produto cadastrado com sucesso!");
       reset();
