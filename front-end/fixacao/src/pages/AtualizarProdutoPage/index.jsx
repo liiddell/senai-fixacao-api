@@ -6,6 +6,10 @@ import api from "../../service/api";
 import "./style.css"; 
 
 const schema = yup.object({
+  codigo: yup
+    .string()
+    .required("O código é obrigatório.")
+    .min(5, "O código deve ter pelo menos 5 caracteres."),
   nome: yup
     .string()
     .required("O nome é obrigatório.")
@@ -22,24 +26,27 @@ const schema = yup.object({
 });
 
 // Suponhamos que o CÓDIGO do produto a ser atualizado seja passado via prop.
-function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) { 
+function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-    // reset, // Removido para simplificar, já que não é necessário limpar o formulário após a atualização
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { nome: "", preco: "", quantidade: "" }, 
+    // ⚠️ MUDANÇA: Adição do campo 'codigo' ao defaultValues
+    defaultValues: { codigo: codigoDoProduto, nome: "", preco: "", quantidade: "" },
   });
 
   const enviarDadosAtualizacao = async (formData) => {
-    // AQUI ESTÁ A MUDANÇA: O endpoint usa '/atualizar/' + codigo
-    const urlAtualizacao = `/atualizar/${codigoDoProduto}`; 
+    // ⚠️ ATENÇÃO: Se o código for alterado no formulário, a URL AINDA usa o código original (codigoDoProduto) para encontrar o registro no backend.
+    // O backend espera o código na URL para identificar o produto a ser atualizado.
+    const urlAtualizacao = `/atualizar/${codigoDoProduto}`;
 
     try {
       // Usamos PUT para a atualização
+      // ⚠️ ATENÇÃO: Se o backend permitir alterar o código, ele precisa fazer a lógica de encontrar o produto pelo `codigoDoProduto` (da URL)
+      // e depois setar o novo código (do `formData.codigo`).
       const resposta = await api.put(urlAtualizacao, formData);
 
       toast.success(resposta?.data?.mensagem || "Produto atualizado com sucesso!");
@@ -51,7 +58,7 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
         toast.error(`Produto com código ${codigoDoProduto} não encontrado.`);
       } else if (status === 409) {
         // Exemplo de erro de validação do servidor
-        setError("nome", { 
+        setError("nome", {
           type: "server",
           message: mensagem,
         });
@@ -64,10 +71,24 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
 
   return (
     <div className="cadastro-container">
-      <h1>Atualização de Produto (CÓDIGO: {codigoDoProduto})</h1> 
+      <h1>Atualização de Produto (CÓDIGO: {codigoDoProduto})</h1>
 
       <form noValidate onSubmit={handleSubmit(enviarDadosAtualizacao)}>
-        
+
+        {/* 🚀 NOVO CAMPO: Código */}
+        <div className="form-group">
+          <label htmlFor="campo-codigo">Código</label>
+          <input
+            id="campo-codigo"
+            type="text"
+            placeholder="Ex.: PROD001"
+            {...register("codigo")}
+            // Se o código não deve ser editado após a criação, adicione: readOnly={true}
+          />
+          {errors.codigo && <p className="error-message">{errors.codigo.message}</p>}
+        </div>
+        {/* Fim do Novo Campo */}
+
         {/* Nome */}
         <div className="form-group">
           <label htmlFor="campo-nome">Nome</label>
@@ -108,7 +129,7 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
         </div>
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Atualizando..." : "Atualizar"} 
+          {isSubmitting ? "Atualizando..." : "Atualizar"}
         </button>
       </form>
     </div>

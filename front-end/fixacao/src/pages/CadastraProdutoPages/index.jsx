@@ -6,6 +6,10 @@ import api from "../../service/api";
 import "./style.css";
 
 const schema = yup.object({
+  codigo: yup
+    .string()
+    .required("O código é obrigatório.")
+    .min(3, "O código deve ter pelo menos 3 caracteres."),
   nome: yup
     .string()
     .required("O nome é obrigatório.")
@@ -30,7 +34,7 @@ function PaginaDeCadastro() {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { nome: "", preco: "", quantidade: "" },
+    defaultValues: { codigo: "", nome: "", preco: "", quantidade: "" },
   });
 
   const enviarDados = async (formData) => {
@@ -62,6 +66,17 @@ function PaginaDeCadastro() {
 
       <form noValidate onSubmit={handleSubmit(enviarDados)}>
         
+        <div className="form-group">
+          <label htmlFor="campo-codigo">Código</label>
+          <input
+            id="campo-codigo"
+            type="text"
+            placeholder="Ex.: ALIM12345"
+            {...register("codigo")}
+          />
+          {errors.codigo && <p className="error-message">{errors.codigo.message}</p>}
+        </div>
+
         {/* Nome */}
         <div className="form-group">
           <label htmlFor="campo-nome">Nome</label>

@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 import api from "../../service/api";
 import "./style.css"; // Mantendo a importação de estilo original
 
-// 1. Esquema de Validação para Deleção
+// --- ATUALIZAÇÃO 1: Usar 'codigo' no schema de validação ---
 const schemaDelecao = yup.object({
-  idProduto: yup
+  codigo: yup
     .string()
-    .required("O ID do produto é obrigatório.")
-    .matches(/^[0-9a-fA-F]{24}$/, "O ID deve ser um ObjectId válido (24 caracteres)."), // Exemplo: validação para um ObjectId do MongoDB
+    .required("O código do produto é obrigatório.")
+    .min(5, "O código deve ter pelo menos 5 caracteres."), // Ajuste a validação conforme necessário
 });
 
 function PaginaDeDelecao() {
@@ -21,24 +21,24 @@ function PaginaDeDelecao() {
     reset,
   } = useForm({
     resolver: yupResolver(schemaDelecao),
-    defaultValues: { idProduto: "" },
+    defaultValues: { codigo: "" }, // Valor padrão para 'codigo'
   });
 
   // 2. Função de Envio para Deleção
   const deletarProduto = async (formData) => {
-    const { idProduto } = formData;
+    const { codigo } = formData; // Extrai o código
     
     try {
-      // Usamos o método DELETE e passamos o ID na URL
-      const resposta = await api.delete(`/produto/${idProduto}`);
+      // --- ATUALIZAÇÃO 2: Usamos o método DELETE com o 'codigo' na URL ---
+      const resposta = await api.delete(`/deletar/${codigo}`); // Endpoint baseado no seu último pedido (/deletar/{codigo})
 
-      toast.success(resposta?.data?.mensagem || "Produto deletado com sucesso!");
+      toast.success(resposta?.data?.mensagem || `Produto com código ${codigo} deletado com sucesso!`);
       reset(); // Limpa o formulário após o sucesso
 
     } catch (erro) {
       const mensagem = erro?.response?.data?.mensagem || "Erro ao deletar produto.";
       
-      // O backend geralmente retorna 404 se o ID não for encontrado
+      // O backend geralmente retorna 404 se o código não for encontrado
       // ou 400/500 em caso de erro no servidor/formato
       toast.error(mensagem);
       console.error("Erro na deleção:", erro);
@@ -47,20 +47,20 @@ function PaginaDeDelecao() {
 
   return (
     <div className="cadastro-container">
-      <h1>Deletar Produto</h1>
+      <h1>Deletar Produto por Código</h1>
 
       <form noValidate onSubmit={handleSubmit(deletarProduto)}>
         
-        {/* Campo do ID do Produto */}
+        {/* --- ATUALIZAÇÃO 3: Campo do Código do Produto --- */}
         <div className="form-group">
-          <label htmlFor="campo-idProduto">ID do Produto</label>
+          <label htmlFor="campo-codigo">Código do Produto</label>
           <input
-            id="campo-idProduto"
+            id="campo-codigo"
             type="text"
-            placeholder="Ex.: 60d5ec49f85d3f23a85b99a5"
-            {...register("idProduto")}
+            placeholder="Ex.: ALIM12345"
+            {...register("codigo")}
           />
-          {errors.idProduto && <p className="error-message">{errors.idProduto.message}</p>}
+          {errors.codigo && <p className="error-message">{errors.codigo.message}</p>}
         </div>
 
         <button type="submit" disabled={isSubmitting}>
