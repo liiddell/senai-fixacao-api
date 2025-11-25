@@ -1,6 +1,7 @@
 package com.example.fixacao.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,10 +13,10 @@ public class ProdutoRequestDTO {
     @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
     private String nome;
 
-    @NotBlank (message = "O preco é obrigatório")
+    @NotNull(message = "O preco é obrigatório")
     private Double preco;
 
-    @NotBlank (message = "A quantidade é obrigatória")
+    @NotNull (message = "A quantidade é obrigatória")
     private int quantidade;
 
     public ProdutoRequestDTO() {
