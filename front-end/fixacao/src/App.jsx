@@ -10,7 +10,8 @@ import Footer from '../src/components/Footer';
 import CadastraProdutoPages from '../src/pages/CadastraProdutoPages';
 import ListarProdutosPages from '../src/pages/ListarProdutosPages';
 import HomePages from '../src/pages/HomePages';
-import AtualizarProdutoPage from '../src/pages/AtualizarProdutoPage';
+import AtualizarProdutoPage from './pages/AtualizarProdutoPage';
+import DeletarProdutoPages from './pages/DeletarProdutoPages';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/cadastro" element={<CadastraProdutoPages />} />
           <Route path="/produtos" element={<ListarProdutosPages />} />
           <Route path="/atualizar" element={<AtualizarProdutoPage />} />
+          <Route path="/deletar" element={<DeletarProdutoPages />} />
         </Routes>
       </main>
       <Footer />
