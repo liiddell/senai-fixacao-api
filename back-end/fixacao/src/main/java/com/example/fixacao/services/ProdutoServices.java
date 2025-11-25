@@ -42,7 +42,6 @@ public class ProdutoServices {
         ProdutoModel produto = produtoRepository.findByCodigo(dto.getCodigo())
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        // Atualiza somente os campos necessários
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setQuantidade(dto.getQuantidade());

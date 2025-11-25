@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/cadastro")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProdutoController {
     @Autowired
     private ProdutoServices produtoService;
@@ -51,7 +51,7 @@ public class ProdutoController {
     }
 
 
-    @DeleteMapping("/{codigo}")
+    @DeleteMapping("/produtos/{codigo}")
     public ResponseEntity<Map<String, Object>> deletar(@PathVariable String codigo) {
 
         produtoService.deletar(codigo);
