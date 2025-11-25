@@ -39,7 +39,7 @@ public class ProdutoServices {
 
     public ProdutoModel atualizar(String codigo, @Valid ProdutoRequestDTO dto) {
 
-        ProdutoModel produto = produtoRepository.findByCodigo(dto.getCodigo())
+        ProdutoModel produto = produtoRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         produto.setNome(dto.getNome());
