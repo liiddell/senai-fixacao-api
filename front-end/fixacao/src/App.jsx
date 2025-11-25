@@ -10,6 +10,7 @@ import Footer from '../src/components/Footer';
 import CadastraProdutoPages from '../src/pages/CadastraProdutoPages';
 import ListarProdutosPages from '../src/pages/ListarProdutosPages';
 import HomePages from '../src/pages/HomePages';
+import DeletarProdutoPages from '../src/pages/DeletarProdutoPages';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<HomePages />} /> 
           <Route path="/cadastro" element={<CadastraProdutoPages />} />
           <Route path="/produtos" element={<ListarProdutosPages />} />
+          <Route path="/deletar" element={<DeletarProdutoPages />}  />
         </Routes>
       </main>
       <Footer />
