@@ -38,6 +38,7 @@ function ListarProdutosPages() {
             <tr>
               <th>Nome</th>
               <th>Preço</th>
+              <th>Quantidade</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,7 @@ function ListarProdutosPages() {
               <tr key={produto.id}> 
                 <td>{produto.nome}</td>
                 <td>{produto.preco}</td>
+                <td>{produto.quantidade}</td>
               </tr>
             ))}
           </tbody>

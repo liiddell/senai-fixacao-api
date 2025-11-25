@@ -10,7 +10,7 @@ const schemaDelecao = yup.object({
   codigo: yup
     .string()
     .required("O código do produto é obrigatório.")
-    .min(5, "O código deve ter pelo menos 5 caracteres."),
+    .min(3, "O código deve ter pelo menos 3 caracteres."),
 });
 
 function PaginaDeDelecao() {
