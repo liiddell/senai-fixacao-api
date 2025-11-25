@@ -10,7 +10,7 @@ function ListarProdutosPages() {
   useEffect(() => {
     async function fetchProdutos() {
       try {
-        const response = await api.get('/produtos');
+        const response = await api.get('/cadastro');
         setProdutos(response.data);
         setLoading(false);
       } catch (error) {

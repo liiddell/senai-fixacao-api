@@ -10,6 +10,7 @@ import Footer from '../src/components/Footer';
 import CadastraProdutoPages from '../src/pages/CadastraProdutoPages';
 import ListarProdutosPages from '../src/pages/ListarProdutosPages';
 import HomePages from '../src/pages/HomePages';
+import AtualizarProdutoPage from '../src/pages/AtualizarProdutoPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<HomePages />} /> 
           <Route path="/cadastro" element={<CadastraProdutoPages />} />
           <Route path="/produtos" element={<ListarProdutosPages />} />
+          <Route path="/atualizar" element={<AtualizarProdutoPage />} />
         </Routes>
       </main>
       <Footer />
