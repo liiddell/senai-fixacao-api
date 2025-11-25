@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import api from "../../service/api";
 import "./style.css"; 
 
+// Validação do formulário com Yup
 const schema = yup.object({
   codigo: yup
     .string()
@@ -25,57 +26,51 @@ const schema = yup.object({
     .required("A quantidade é obrigatória."),
 });
 
-// Suponhamos que o CÓDIGO do produto a ser atualizado seja passado via prop.
-function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
+function PaginaDeAtualizacao() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
-    // ⚠️ MUDANÇA: Adição do campo 'codigo' ao defaultValues
-    defaultValues: { codigo: codigoDoProduto, nome: "", preco: "", quantidade: "" },
+    defaultValues: { codigo: "", nome: "", preco: "", quantidade: "" },
   });
 
   const enviarDadosAtualizacao = async (formData) => {
-    // ⚠️ ATENÇÃO: Se o código for alterado no formulário, a URL AINDA usa o código original (codigoDoProduto) para encontrar o registro no backend.
-    // O backend espera o código na URL para identificar o produto a ser atualizado.
-    const urlAtualizacao = `/atualizar/${codigoDoProduto}`;
+  const urlAtualizacao = `/cadastro/${formData.codigo}`;
 
-    try {
-      // Usamos PUT para a atualização
-      // ⚠️ ATENÇÃO: Se o backend permitir alterar o código, ele precisa fazer a lógica de encontrar o produto pelo `codigoDoProduto` (da URL)
-      // e depois setar o novo código (do `formData.codigo`).
-      const resposta = await api.put(urlAtualizacao, formData);
+  try {
+    const resposta = await api.put(urlAtualizacao, {
+      codigo: formData.codigo, // <- importante
+      nome: formData.nome,
+      preco: formData.preco,
+      quantidade: formData.quantidade,
+    });
 
-      toast.success(resposta?.data?.mensagem || "Produto atualizado com sucesso!");
-    } catch (erro) {
-      const status = erro?.response?.status;
-      const mensagem = erro?.response?.data?.mensagem || "Erro ao atualizar produto.";
+    toast.success(resposta?.data?.mensagem || "Produto atualizado com sucesso!");
+  } catch (erro) {
+    const status = erro?.response?.status;
+    const mensagem = erro?.response?.data?.mensagem || "Erro ao atualizar produto.";
 
-      if (status === 404) {
-        toast.error(`Produto com código ${codigoDoProduto} não encontrado.`);
-      } else if (status === 409) {
-        // Exemplo de erro de validação do servidor
-        setError("nome", {
-          type: "server",
-          message: mensagem,
-        });
-      }
-
+    if (status === 404) {
+      toast.error(`Produto com código ${formData.codigo} não encontrado.`);
+    } else {
       toast.error(mensagem);
-      console.error("Erro na atualização:", erro);
     }
-  };
+
+    console.error("Erro na atualização:", erro);
+  }
+};
 
   return (
     <div className="cadastro-container">
-      <h1>Atualização de Produto (CÓDIGO: {codigoDoProduto})</h1>
+      <h1>Atualização de Produto</h1>
 
       <form noValidate onSubmit={handleSubmit(enviarDadosAtualizacao)}>
 
-        {/* 🚀 NOVO CAMPO: Código */}
+        {/* Campo: Código */}
         <div className="form-group">
           <label htmlFor="campo-codigo">Código</label>
           <input
@@ -83,13 +78,11 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
             type="text"
             placeholder="Ex.: PROD001"
             {...register("codigo")}
-            // Se o código não deve ser editado após a criação, adicione: readOnly={true}
           />
           {errors.codigo && <p className="error-message">{errors.codigo.message}</p>}
         </div>
-        {/* Fim do Novo Campo */}
 
-        {/* Nome */}
+        {/* Campo: Nome */}
         <div className="form-group">
           <label htmlFor="campo-nome">Nome</label>
           <input
@@ -101,7 +94,7 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
           {errors.nome && <p className="error-message">{errors.nome.message}</p>}
         </div>
 
-        {/* Preço */}
+        {/* Campo: Preço */}
         <div className="form-group">
           <label htmlFor="campo-preco">Preço</label>
           <input
@@ -114,7 +107,7 @@ function PaginaDeAtualizacao({ codigoDoProduto = "ABC12345" }) {
           {errors.preco && <p className="error-message">{errors.preco.message}</p>}
         </div>
 
-        {/* Quantidade */}
+        {/* Campo: Quantidade */}
         <div className="form-group">
           <label htmlFor="campo-quantidade">Quantidade</label>
           <input
